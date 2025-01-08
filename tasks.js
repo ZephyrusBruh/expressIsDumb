@@ -27,13 +27,13 @@ app.get('/tasks/:id', (req,res)=>{
 });
 
 app.post('/tasks', (req,res)=>{
-    const newId = tasks.length >0 ? Math.max(... tasks.map(item => task.id)) +1 :1;
+    const newId = tasks.length >0 ? Math.max(... tasks.map(task => task.id)) +1 :1;
     const newTask = {
         id: newId,
         description: "Item",
         completed: false
     }
-    items.push(newItem);
+    tasks.push(newTask);
     res.status(201).json(newTask);
 });
 
@@ -49,7 +49,7 @@ app.put('/tasks/:id', (req,res)=>{
     }
 });
 
-app.delete('/item/:id', (req,res)=> {
+app.delete('/tasks/:id', (req,res)=> {
     const id = parseInt(req.params.id);
     const task = tasks.find((task)=> task.id == id);
     if(task){
@@ -66,3 +66,8 @@ app.delete('/item/:id', (req,res)=> {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// curl -X GET http://localhost:4000/tasks
+// curl -X POST http://localhost:4000/tasks -H "Content-Type: application/json" -d "{\"description\":\"New item\", \"completed\":\"true\"}"
+// curl -X PUT -d "{\"completed\":\"true\"}" -H "Content-Type: application/json" http://localhost:4000/tasks/1
+// curl -X DELETE http://localhost:4000/tasks/1
